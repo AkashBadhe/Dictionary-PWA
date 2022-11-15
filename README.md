@@ -36,3 +36,4 @@ Start the server
   yarn start or npm run start
 ```
 ## Screenshots
+![Dictionary App Demo](/screens/dictionary-demo.gif?raw=true "Dictionary App Demo")
