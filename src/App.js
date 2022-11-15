@@ -4,23 +4,24 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import "./App.css";
 import Definitions from "./components/Definitions/Definitions";
-import Footer from "./components/Footer/Footer";
 import Header from "./components/Header/Header";
 
 function App() {
   const [word, setWord] = useState("");
+  const [error, setError] = useState("");
   const [meanings, setMeanings] = useState([]);
   const [category, setCategory] = useState("en");
   const [LightTheme, setLightTheme] = useState(false);
 
   const dictionaryApi = async () => {
     try {
+      setError('');
       const data = await axios.get(
         `https://api.dictionaryapi.dev/api/v2/entries/${category}/${word}`
       );
       setMeanings(data.data);
     } catch (error) {
-      console.log(error);
+      setError(error?.response?.data?.title || 'No Definitions Found');
     }
   };
 
@@ -67,8 +68,9 @@ function App() {
         <div
           style={{ position: "absolute", top: 0, right: 15, paddingTop: 10 }}
         >
-          <span>{LightTheme ? "Dark" : "Light"} Mode</span>
+          <label for="mode-switch">{LightTheme ? "Dark" : "Light"} Mode</label>
           <PurpleSwitch
+            id="mode-switch"
             checked={LightTheme}
             onChange={() => setLightTheme(!LightTheme)}
           />
@@ -87,10 +89,10 @@ function App() {
             word={word}
             LightTheme={LightTheme}
             category={category}
+            error={error}
           />
         )}
       </Container>
-      <Footer />
     </div>
   );
 }

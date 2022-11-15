@@ -28,13 +28,12 @@ const Header = ({
     setMeanings([]);
   };
 
-    const handleText = debounce((text) => {
+  const handleText = debounce((text) => {
     setWord(text);
   }, 500);
 
   return (
     <div className="header">
-      <span className="title">{word ? word : "Word Hunt"}</span>
       <div className="inputs">
         <ThemeProvider theme={darkTheme}>
           <TextField
