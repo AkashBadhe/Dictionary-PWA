@@ -22,6 +22,8 @@ const Definitions = ({ meanings, word, LightTheme, category, error }) => {
             className="singleMean"
             style={{
               color: LightTheme ? "black" : "white",
+              padding: '30px 20px',
+              border: `1px solid ${LightTheme ? "black" : "white"}`
             }}
           >
             <span><b>Definition:</b> {def.definition}</span>
@@ -44,7 +46,7 @@ const Definitions = ({ meanings, word, LightTheme, category, error }) => {
   }
   return (
     <>
-      {(phonetic?.audio || phonetic?.text) && <div id="audio">
+      {word !== "" && !error && (phonetic?.audio || phonetic?.text) && <div id="audio">
         {phonetic?.text && <p>Pronounciation: <b>{phonetic?.text}</b></p>}
         {phonetic?.audio && <audio controls>
           <source src={phonetic?.audio} type="audio/mpeg" />

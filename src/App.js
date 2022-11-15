@@ -10,27 +10,23 @@ function App() {
   const [word, setWord] = useState("");
   const [error, setError] = useState("");
   const [meanings, setMeanings] = useState([]);
-  const [category, setCategory] = useState("en");
   const [LightTheme, setLightTheme] = useState(false);
 
   const dictionaryApi = async () => {
     try {
       setError('');
       const data = await axios.get(
-        `https://api.dictionaryapi.dev/api/v2/entries/${category}/${word}`
+        `https://api.dictionaryapi.dev/api/v2/entries/en/${word}`
       );
       setMeanings(data.data);
     } catch (error) {
       setError(error?.response?.data?.title || 'No Definitions Found');
     }
   };
-
-  console.log(meanings);
-
   useEffect(() => {
     dictionaryApi();
     // eslint-disable-next-line
-  }, [word, category]);
+  }, [word]);
 
   const PurpleSwitch = withStyles({
     switchBase: {
@@ -77,8 +73,6 @@ function App() {
         </div>
         <Header
           setWord={setWord}
-          category={category}
-          setCategory={setCategory}
           word={word}
           setMeanings={setMeanings}
           LightTheme={LightTheme}
@@ -88,7 +82,6 @@ function App() {
             meanings={meanings}
             word={word}
             LightTheme={LightTheme}
-            category={category}
             error={error}
           />
         )}

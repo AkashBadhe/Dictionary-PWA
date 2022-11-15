@@ -1,19 +1,13 @@
-import { createMuiTheme, TextField, ThemeProvider } from "@material-ui/core";
+import { createTheme, TextField, ThemeProvider } from "@material-ui/core";
 import React from "react";
 import "./Header.css";
-import MenuItem from "@material-ui/core/MenuItem";
-import countries from "../../data/category";
 import { debounce } from "lodash";
 
 const Header = ({
-  category,
-  setCategory,
   setWord,
-  word,
-  setMeanings,
   LightTheme,
 }) => {
-  const darkTheme = createMuiTheme({
+  const darkTheme = createTheme({
     palette: {
       primary: {
         main: LightTheme ? "#000" : "#fff",
@@ -21,12 +15,6 @@ const Header = ({
       type: LightTheme ? "light" : "dark",
     },
   });
-
-  const handleChange = (e) => {
-    setCategory(e.target.value);
-    setWord("");
-    setMeanings([]);
-  };
 
   const handleText = debounce((text) => {
     setWord(text);
@@ -38,24 +26,13 @@ const Header = ({
         <ThemeProvider theme={darkTheme}>
           <TextField
             className="search"
+            variant="outlined"
             id="filled-basic"
             // value={word}
             label="Search a Word"
             onChange={(e) => handleText(e.target.value)}
+            fullWidth
           />
-          <TextField
-            select
-            label="Language"
-            value={category}
-            onChange={(e) => handleChange(e)}
-            className="select"
-          >
-            {countries.map((option) => (
-              <MenuItem key={option.label} value={option.label}>
-                {option.value}
-              </MenuItem>
-            ))}
-          </TextField>
         </ThemeProvider>
       </div>
     </div>
